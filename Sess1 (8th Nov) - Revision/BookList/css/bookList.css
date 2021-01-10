@@ -1,0 +1,24 @@
+#app {
+}
+
+#header-container {
+  display: flex;
+  justify-content: space-evenly;
+  width: 40%;
+  margin-top: 50px;
+  margin-bottom: 5px;
+}
+
+#header-container div {
+  width: 300px;
+}
+
+#add-book-form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+#add-book-form input-wrapper {
+  margin: 5px 0px;
+}

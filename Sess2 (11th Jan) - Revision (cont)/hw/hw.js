@@ -61,3 +61,10 @@ $searchInput.addEventListener("keydown", function (e) {
     $searchBtn.onclick();
   }
 });
+
+$name.onclick = () => {
+  const user = $name.innerHTML  
+  if (user != "(placeholder)") {
+    window.location.href = `https://github.com/${user}`
+  }
+}

@@ -1,0 +1,54 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./hw.css" />
+  </head>
+  <body>
+    <div id="header">
+      <img
+        id="logo"
+        src="./GitHub-Mark-Light-64px.png"
+        alt="GitHub Logo"
+        onclick="toGitHub();"
+      />
+    </div>
+    <div id="main">
+      <div id="search-container">
+        <input
+          id="search-input"
+          type="text"
+          placeholder="Enter username here"
+        />
+        <button id="search-btn">Search</button>
+      </div>
+      <h1>User Info</h1>
+      <div id="img-container">
+        Image here
+      </div>
+      <table id="info">
+        <tr>
+          <td id="name" colspan="2">(placeholder)</td>
+        </tr>
+        <tr>
+          <td>email</td>
+          <td id="email">(placeholder)</td>
+        </tr>
+        <tr>
+          <td>company</td>
+          <td id="company">(placeholder)</td>
+        </tr>
+        <tr>
+          <td>follower</td>
+          <td id="follower">(placeholder)</td>
+        </tr>
+      </table>
+    </div>
+    <div id="footer">
+      <span>By <span id="me" onclick="toMe()">hihi-haha-hoho</span></span>
+    </div>
+
+    <script src="./hw.js"></script>
+  </body>
+</html>

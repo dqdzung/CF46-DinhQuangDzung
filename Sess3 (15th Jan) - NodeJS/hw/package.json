@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "nodejs_practice",
   "main": "index.js",
-  "scripts": {
+  "scripts": {    
     "test": "mocha"
   },
   "keywords": [],

@@ -3,22 +3,26 @@ const app = express();
 const path = require("path");
 const fs = require("fs");
 
-app.use(express.urlencoded ({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
 
 app.use(express.static("public"));
 
-app.get("/", (request, response) => {
-  response.sendFile(path.resolve(__dirname, "./public/app/index.html"));
+app.get("/ask", (request, response) => {
+  response.sendFile(path.resolve(__dirname, "./public/ask/index.html"));
 });
 
-// app.get("/index.css", (request, response) => {
-//   response.sendFile(path.resolve(__dirname, "./index.css"));
-// });
+app.get("/", (request, response) => {
+  response.sendFile(path.resolve(__dirname, "./public/home/index.html"));  
+});
 
-app.post("/ask-question", (request, response) => {
-  const data = require('./data.json');
+app.get("/data.json", (request, response) => {
+  response.sendFile(path.resolve(__dirname, "./data.json"));  
+});
+
+app.post("/add-question", (request, response) => {
+  const data = require("./data.json");
   const question = {
     _id: data.length + 1,
     content: request.body.content,
@@ -27,10 +31,10 @@ app.post("/ask-question", (request, response) => {
   };
   const newData = [...data, question];
   fs.writeFileSync("data.json", JSON.stringify(newData));
-  
+
   response.send({
     success: 1,
-    data: question
+    data: question,
   });
 });
 
@@ -38,5 +42,5 @@ app.listen(8080, (err) => {
   if (err) {
     throw err;
   }
-  console.log("Server started");
+  console.log("Server started!");
 });

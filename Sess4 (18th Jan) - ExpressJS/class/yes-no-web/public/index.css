@@ -17,3 +17,14 @@ button {
     font-weight: bold;
     
 }
+
+#text-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

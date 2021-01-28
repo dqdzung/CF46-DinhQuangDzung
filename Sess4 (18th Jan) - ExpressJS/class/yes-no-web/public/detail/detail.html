@@ -1,20 +1,20 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="/index.css" />
+    <title>Detail</title>
   </head>
   <body>
     <div id="home">
-      <h1 id="question-container">A Random Question</h1>
+      <h1 id="question-container">Question container</h1>
       <div>
-        <button id="yes">Yes</button>
-        <button id="no">No</button>
+        <div><span id="vote-total"></span> vote(s)</div>        
+        <div>Yes/No: <span id="yes-percent"></span>/<span id="no-percent"></span></div>
         <button id="other-question">Other</button>
       </div>
       <a href="/ask">Ask a question</a>
     </div>
-    <script src="/app.js"></script>
+    <script src="/detail/detail.js"></script>
   </body>
 </html>

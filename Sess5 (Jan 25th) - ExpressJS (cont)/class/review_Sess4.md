@@ -12,7 +12,7 @@ Express cung cấp các router cho các HTML request:
 Express cung cấp static folder:
     - cung cấp 1 cơ chế để xác định file tĩnh (file html, css, image, js...) dễ dàng
 
-Express cung cấp 1 cơ chế để đọc dât client gửi lên:
+Express cung cấp 1 cơ chế để đọc data client gửi lên:
     - express().use(express.urlendcoded({extended: true}));
     - express().use(express.json());
 

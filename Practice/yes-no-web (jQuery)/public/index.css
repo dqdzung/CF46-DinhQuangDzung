@@ -1,0 +1,50 @@
+#question-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  color: red;
+}
+
+button {
+  height: 50px;
+  width: 110px;
+  font-size: 25px;
+  color: red;
+  font-weight: bold;
+}
+
+#text-container {
+  display: flex;
+  flex-direction: column;
+}
+
+#home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+#vote-container, #yes-no-container {  
+  margin: 10px;
+  font-size: 20px;
+}
+
+#content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+a {
+    margin: 10px;
+}

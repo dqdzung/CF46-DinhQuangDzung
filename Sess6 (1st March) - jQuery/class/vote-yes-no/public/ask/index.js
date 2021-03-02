@@ -11,7 +11,7 @@ $createForm.on("submit", (event) => {
   $.ajax({
     url: "http://localhost:8080/create-question",
     method: "POST",
-    body: question,
+    data: question,
   }).then((res) => {
       if (res.success) {
         window.location.href = "/";

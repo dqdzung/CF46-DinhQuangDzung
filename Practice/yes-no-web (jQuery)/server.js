@@ -4,9 +4,7 @@ const path = require("path");
 const fs = require("fs");
 
 app.use(express.urlencoded({ extended: true }));
-
 app.use(express.json());
-
 app.use(express.static("public"));
 
 app.get("/ask", (request, response) => {
@@ -32,7 +30,6 @@ app.get("/random-question", (request, response) => {
 
 const randomize = (array) => {
   const randomIndex = Math.floor(Math.random() * array.length);
-
   return array[randomIndex];
 };
 
@@ -57,7 +54,7 @@ app.listen(8080, (err) => {
   if (err) {
     throw err;
   }
-  console.log("Server started!");
+  console.log("Server started...");
 });
 
 app.put("/add-vote/:id", (req, res) => {
@@ -65,25 +62,13 @@ app.put("/add-vote/:id", (req, res) => {
   const type = req.body.type;
   let data = JSON.parse(fs.readFileSync("data.json"));
 
-  const foundQuestion = data.find((question) => {
-    const sameId = parseInt(question._id) === parseInt(id);
-    return sameId;
-  });
-
-  if (!foundQuestion) {
-    return res.send({
-      success: 0,
-      data: null,
-    });
-  }
+  const foundQuestion = data.find(
+    (question) => parseInt(question._id) === parseInt(id)
+  );
 
   if (type === "yes" || type === "no") {
     foundQuestion[type]++;
-  } else
-    return res.send({
-      success: 0,
-      data: null,
-    });
+  }
 
   fs.writeFileSync("data.json", JSON.stringify(data));
 
@@ -96,9 +81,8 @@ app.put("/add-vote/:id", (req, res) => {
 app.get("/detail/:id", (req, res) => {
   const id = req.params.id;
   let data = JSON.parse(fs.readFileSync("data.json"));
-  const foundQuestion = data.find((question) => {
-    const sameId = parseInt(question._id) === parseInt(id);
-    return sameId;
-  });
+  const foundQuestion = data.find(
+    (question) => parseInt(question._id) === parseInt(id)
+  );
   return res.send({ success: 1, data: foundQuestion });
 });

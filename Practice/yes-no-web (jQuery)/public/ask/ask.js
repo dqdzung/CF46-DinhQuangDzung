@@ -5,9 +5,10 @@ $(() => {
     if (questionContent) {
       if (confirm("Submit question?")) {
         const question = { content: questionContent };
-        await fetch("http://localhost:8080/add-question", {
+        await $.ajax({
+          url: "http://localhost:8080/add-question",
           method: "POST",
-          body: new URLSearchParams(question),
+          data: question,
         });
         window.location.href = "/";
       }

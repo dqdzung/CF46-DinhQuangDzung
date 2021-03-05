@@ -5,34 +5,31 @@ $(function () {
   renderQuestion();
 
   $("#other-question").on("click", function () {
-    //
     renderQuestion();
   });
 
-  $("#yes").on("click", () => {
-    vote("yes");
-  });
-
-  $("#no").on("click", () => {
-    vote("no");
+  $(".voteBtn").on("click", function () {    
+    const choice = $(this).attr("data-type");      
+    vote(choice);      
   });
 });
 
 const vote = async (type) => {
-  const res = await fetch(`http://localhost:8080/add-vote/${questionId}`, {
+  const res = await $.ajax({
+    url: `http://localhost:8080/add-vote/${questionId}`,
     method: "PUT",
-    body: new URLSearchParams({ type: type }),
+    data: { type: type },
   });
-  const jsonRes = await res.json();
-  if (jsonRes.success) {
-    window.location.href = `/question/${jsonRes.data._id}`;
+  if (res.success) {
+    window.location.href = `/question/${res.data._id}`;
   }
 };
 
 const getRandomQuestion = async () => {
-  const response = await fetch("http://localhost:8080/random-question");
-  const jsonData = await response.json();
-  const questionData = await jsonData.data;
+  const res = await $.ajax({
+    url: "http://localhost:8080/random-question",
+  });
+  const questionData = res.data;
   questionId = questionData._id;
   return questionData;
 };

@@ -9,11 +9,11 @@ $(() => {
 });
 
 const getQuestion = async () => {
-  const res = await fetch(`http://localhost:8080/detail/${idFromUrl}`);
-  const jsonRes = await res.json();
-  // console.log(jsonRes);
-  if (jsonRes.success) {
-    const { data: question } = jsonRes;
+  const res = await $.ajax({
+    url: `http://localhost:8080/detail/${idFromUrl}`,
+  });
+  if (res.success) {    
+    const question = res.data;    
     const { content, yes, no } = question;
     const votes = parseInt(yes) + parseInt(no);
 

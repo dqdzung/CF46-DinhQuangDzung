@@ -8,20 +8,25 @@ $(function () {
     renderQuestion();
   });
 
-  $(".voteBtn").on("click", function () {    
-    const choice = $(this).attr("data-type");      
-    vote(choice);      
+  $(".voteBtn").on("click", function () {
+    const choice = $(this).attr("data-type");
+    vote(choice);
   });
 });
 
 const vote = async (type) => {
-  const res = await $.ajax({
-    url: `http://localhost:8080/add-vote/${questionId}`,
-    method: "PUT",
-    data: { type: type },
-  });
-  if (res.success) {
-    window.location.href = `/question/${res.data._id}`;
+  try {
+    const res = await $.ajax({
+      url: `http://localhost:8080/add-vote/${questionId}`,
+      method: "PUT",
+      data: { type },
+    });
+    if (res.success) {
+      console.log(res);
+      window.location.href = `/question/${res.data._id}`;
+    }
+  } catch (err) {
+    console.log(err);
   }
 };
 

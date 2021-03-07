@@ -2,10 +2,23 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const fs = require("fs");
+const mongoose = require("mongoose");
+const QuestionModel = require("./models/question");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
+
+mongoose.connect(
+  "mongodb://localhost:27017/vote-app",
+  { useNewUrlParser: true },
+  (err) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log("Connected to MongoDB server...");
+  }
+);
 
 app.get("/ask", (request, response) => {
   response.sendFile(path.resolve(__dirname, "./public/ask/ask.html"));
@@ -19,35 +32,107 @@ app.get("/question/:id", (request, response) => {
   response.sendFile(path.resolve(__dirname, "./public/detail/detail.html"));
 });
 
-app.get("/random-question", (request, response) => {
-  const data = require("./data.json");
-  const randomQuestion = randomize(data);
-  response.send({
-    success: 1,
-    data: randomQuestion,
-  });
+app.get("/random-question", async (req, res) => {
+  try {
+    const questions = await QuestionModel.aggregate().sample(1);
+
+    if (!questions[0]) {
+      return res.status(404).send({
+        success: 0,
+        data: null,
+      });
+    }
+
+    res.send({
+      success: 1,
+      data: questions[0],
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      success: 0,
+      data: null,
+    });
+  }
 });
 
-const randomize = (array) => {
-  const randomIndex = Math.floor(Math.random() * array.length);
-  return array[randomIndex];
-};
+app.post("/add-question", async (req, res) => {
+  try {
+    // console.log(req.body);
+    const newQuestion = {
+      content: req.body.content,
+    };
 
-app.post("/add-question", (request, response) => {
-  const data = require("./data.json");
-  const question = {
-    _id: data.length + 1,
-    content: request.body.content,
-    yes: 0,
-    no: 0,
-  };
-  const newData = [...data, question];
-  fs.writeFileSync("data.json", JSON.stringify(newData));
+    console.log(newQuestion);
+    const saveQuestion = await QuestionModel.create(newQuestion);
 
-  response.send({
-    success: 1,
-    data: question,
-  });
+    res.send({
+      success: 1,
+      data: saveQuestion,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      success: 0,
+      data: null,
+    });
+  }
+});
+
+app.put("/add-vote/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { type } = req.body;
+
+    const foundQuestion = await QuestionModel.findById(id);
+
+    foundQuestion[type]++;
+    await foundQuestion.save();
+
+    if (!foundQuestion) {
+      return res.status(404).send({
+        success: 0,
+        data: null,
+      });
+    }
+
+    res.send({
+      success: 1,
+      data: foundQuestion,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      success: 0,
+      data: null,
+    });
+  }
+});
+
+app.get("/detail/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const foundQuestion = await QuestionModel.findById(id);
+
+    if (!foundQuestion) {
+      return res.status(404).send({
+        success: 0,
+        data: null,
+      });
+    }
+
+    return res.send({
+      success: 1,
+      data: foundQuestion,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      success: 0,
+      data: null,
+    });
+  }
 });
 
 app.listen(8080, (err) => {
@@ -55,34 +140,4 @@ app.listen(8080, (err) => {
     throw err;
   }
   console.log("Server started...");
-});
-
-app.put("/add-vote/:id", (req, res) => {
-  const id = req.params.id;
-  const type = req.body.type;
-  let data = JSON.parse(fs.readFileSync("data.json"));
-
-  const foundQuestion = data.find(
-    (question) => parseInt(question._id) === parseInt(id)
-  );
-
-  if (type === "yes" || type === "no") {
-    foundQuestion[type]++;
-  }
-
-  fs.writeFileSync("data.json", JSON.stringify(data));
-
-  return res.send({
-    success: 1,
-    data: foundQuestion,
-  });
-});
-
-app.get("/detail/:id", (req, res) => {
-  const id = req.params.id;
-  let data = JSON.parse(fs.readFileSync("data.json"));
-  const foundQuestion = data.find(
-    (question) => parseInt(question._id) === parseInt(id)
-  );
-  return res.send({ success: 1, data: foundQuestion });
 });

@@ -11,11 +11,17 @@
     <div id="home">
       <h1 id="question-container">A Random Question</h1>
       <div>
-        <button class="voteBtn" data-type="yes">Yes</button>
-        <button class="voteBtn" data-type="no">No</button>
+        <button class="vote-button" data-type="yes">Yes</button>
+        <button class="vote-button" data-type="no">No</button>
         <button id="other-question">Other</button>
+        <button id="delete-btn">Delete</button>
       </div>
       <a href="/ask">Ask a question</a>
+      <a href="/search">Search</a>
+      <div id="most-yes-contaniner">
+        Question with most yeses:
+        <p id="most-yes">Placeholder</p>
+      </div>
     </div>
     <script src="/home/home.js"></script>
   </body>

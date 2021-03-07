@@ -1,4 +1,4 @@
-#question-form {
+#question-form, #search-form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -47,4 +47,8 @@ body {
 
 a {
     margin: 10px;
+}
+
+#most-yes-contaniner {
+  text-align: center;
 }

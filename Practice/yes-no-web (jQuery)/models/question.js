@@ -9,6 +9,8 @@ const QuestionSchema = new mongoose.Schema({
   no: { type: Number, default: 0 },
 });
 
+QuestionSchema.index({content: "text"});
+
 const questionModel = mongoose.model("question", QuestionSchema);
 
 module.exports = questionModel;

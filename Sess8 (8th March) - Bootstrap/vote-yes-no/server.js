@@ -33,6 +33,10 @@ app.get("/", (req, res) => {
   res.sendFile(path.resolve(__dirname, "./public/home/index.html"));
 });
 
+app.get("/search", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "./public/search/search.html"));
+});
+
 app.get("/question/max-vote", async (req, res) => {
   // const maxYesQuestion = await QuestionModel.find().sort({yes: -1}).skip(0).limit(1);
   // return res.send({
@@ -146,8 +150,17 @@ app.put("/add-vote/:idQuestion", async (req, res) => {
   }
 });
 
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "./public/404/index.html"));
+app.get("/question-search", async (req, res) => {
+  const { keyword } = req.query;  
+  
+  const keywordRegex = new RegExp(keyword, "i")
+
+  const results = await QuestionModel.find({content: {$regex: keywordRegex}});
+
+   res.send({
+     success: 1,
+    data: results,
+  });
 });
 
 app.delete("/question/:idQuestion", async (req, res) => {
@@ -166,6 +179,10 @@ app.delete("/question/:idQuestion", async (req, res) => {
     data: deleteQuestion,
     message: "Question deleted",
   });
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "./public/404/index.html"));
 });
 
 app.listen(8080, (err) => {

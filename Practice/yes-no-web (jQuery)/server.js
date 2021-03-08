@@ -177,18 +177,12 @@ app.get("/most-yes", async (req, res) => {
 app.get("/question-search/:searchInput", async (req, res) => {
   const { searchInput } = req.params;
 
-  const collection = await QuestionModel.find(); 
-  
-  const results = [];
+  const searchTerm = new RegExp(searchInput, "i")
 
-  collection.filter((doc) => {
-    if((doc.content.toLowerCase()).includes(searchInput.toLowerCase())) {
-      results.push(doc)
-    }
-    return results;
-  })
+  const results = await QuestionModel.find({content: searchTerm}); 
 
    res.send({
+     success: 1,
     data: results,
   });
 });

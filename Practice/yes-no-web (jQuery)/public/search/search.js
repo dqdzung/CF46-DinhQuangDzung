@@ -10,11 +10,15 @@ $(function () {
     const res = await $.ajax({
       url: `http://localhost:8080/question-search/${searchInput}`,
     });
+    console.log(res.data);
+
+    let html = "";
     res.data.forEach((elem) => {
-      $("#result-container").append(
-        `<li><a href="/question/${elem._id}">${elem.content}</a></li>`
-      );
+      html += `<li><a href="/question/${elem._id}">${elem.content}</a></li>`;
     });
+
+    $("#result-container").append(html);
+
     $("#search-input").val("");
   });
 });

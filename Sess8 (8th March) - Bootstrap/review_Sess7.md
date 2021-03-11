@@ -8,4 +8,6 @@ find, findOne, findByID => truyền vào các options để filter
 - U: Update
 findByIdAndUpdate, findOneAndUpdate, updateOne, updateMany => options để lọc
 - D: Delete
-delete
+delete, findByIdAndDelete, findOneAndRemove, deleteOne, deleteMany
+- Map/Reduce: array methods, để báo cáo, tính toán mảng
+- Aggregate

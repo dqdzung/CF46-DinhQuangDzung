@@ -22,23 +22,70 @@
       integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
       crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="/create/style.css">
+    <link rel="stylesheet" href="/create/style.css" />
     <script src="/create/create.js" defer></script>
   </head>
   <body>
-    <div id="container">
+    <!-- Nav bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">Flashcard</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="/create">Create card</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Nav bar -->
+    <div
+      id="main-container"
+      class="d-flex flex-column align-items-center justify-content-center m-2"
+    >
       <form id="create-form">
-        <input id="front-input"
+        <input
+          id="front-input"
           class="form-control"
           type="text"
-          placeholder="Front"          
+          placeholder="Front content"
+          required
         />
-        <input id="back-input"
-        class="form-control"
-        type="text"
-        placeholder="Back"          
-      />
-        <button id="save-btn" class="btn btn-primary" type="submit">Save</button>
+        <input
+          id="back-input"
+          class="form-control"
+          type="text"
+          placeholder="Back content"
+          required
+        />
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01"
+              >Category</label
+            >
+          </div>
+          <select id="category-select" class="custom-select" id="inputGroupSelect01" required>            
+            <option value="">Choose...</option>
+            <option value="1">Code</option>
+            <option value="2">Vocal</option>
+            <option value="3">Other</option>
+          </select>
+        </div>
+        <button id="save-btn" class="btn btn-primary btn-block" type="submit">
+          Save
+        </button>
       </form>
     </div>
   </body>

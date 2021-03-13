@@ -1,18 +1,87 @@
-console.log("Page loaded");
+let cardId = "";
 
-$("#flip-btn").on("click", () => {
-  console.log("Flip clicked");  
-  $(".flip-card-inner").toggleClass("card-flipped");  
+$(() => {
+  console.log("Page loaded");
+
+  renderCard();
+
+  $(".flip-card").on("click", () => {
+    // console.log("Flip clicked");
+    $(".flip-card").toggleClass("card-flipped");
+  });
+
+  $("#edit-btn").on("click", () => {
+    console.log("Edit clicked");
+  });
+
+  $("#remember-btn").on("click", () => {
+    if (confirm('Mark word as "Remember"?')) {
+      $("#isRememberBadge, #remember-btn, #forget-btn").toggleClass("hidden");
+
+      $.ajax({
+        url: `http://localhost:6969/remember-card/${cardId}`,
+        method: "PUT",
+      }).then((res) => {
+        if (res.success) {
+          console.log(res);
+        }
+      });
+    }
+  });
+
+  $("#forget-btn").on("click", () => {
+    if (confirm('Mark word as "Forget"?')) {
+      $("#isRememberBadge, #remember-btn, #forget-btn").toggleClass("hidden");
+
+      $.ajax({
+        url: `http://localhost:6969/forget-card/${cardId}`,
+        method: "PUT",
+      }).then((res) => {
+        if (res.success) {
+          console.log(res);
+        }
+      });
+    }
+  });
+
+  $("#next-btn").on("click", () => {
+    console.log("Next clicked");
+  });
 });
 
-$("#edit-btn").on("click", () => {
-  console.log("Edit clicked");
-});
+const getRandomCard = async () => {
+  const res = await $.ajax({
+    url: "http://localhost:6969/random-card",
+  });
 
-$("#remember-btn").on("click", () => {
-  console.log("Remember clicked");
-});
+  return res.data;
+};
 
-$("#next-btn").on("click", () => {
-  console.log("Next clicked");
-});
+const renderCard = async () => {
+  const randomCard = await getRandomCard();
+
+  console.log(randomCard);
+
+  const { _id, category, front, back, remember } = randomCard;
+
+  const html =
+    /*html*/
+    `          
+    <div class="flip-card-front d-flex flex-column align-items-center justify-content-center">
+      <span id="isRememberBadge" class="badge bg-success hidden" style="">Remember</span>
+      <h5 id="category">${category}</h5>
+      <h2 id="front-content">${front}</h2>
+    </div>
+    <div class="flip-card-back d-flex flex-column align-items-center justify-content-center">
+      <div id="back-content">${back}</div>
+    </div>
+  `;
+
+  $(".flip-card-inner").append(html);
+
+  if (remember) {
+    $("#isRememberBadge, #remember-btn, #forget-btn").toggleClass("hidden");
+  }
+
+  cardId = _id;
+};

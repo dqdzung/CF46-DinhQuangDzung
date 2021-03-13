@@ -1,3 +1,11 @@
-#container {
-  width: 500px;
+#main-container {
+  height: calc(100vh - 56px - 16px);
+}
+
+#create-form {
+  width: 50%;
+}
+
+#save-btn {
+  width: 100%;
 }

@@ -31,15 +31,24 @@ app.get("/create", (req, res) => {
   res.sendFile(path.resolve(__dirname, "./public/create/create.html"));
 });
 
-app.post("/new-card", async (req, res) => {
+app.get("/card/:id", (req, res) => {
+  const cardId = req.params.id;
+
+  res.sendFile(path.resolve(__dirname, "./public/detail/detail.html"));
+});
+
+app.get("/detail/:id", async (req, res) => {
   try {
-    const newCard = req.body;
+    const cardId = req.params.id;
+    const foundCard = await CardModel.findById(cardId);
 
-    console.log(newCard);
+    if (!foundCard) {
+      return res
+        .status(404)
+        .send({ success: 0, data: null, message: "Not found" });
+    }
 
-    const saveCard = await CardModel.create(newCard);
-
-    res.send({ success: 1, data: saveCard });
+    res.send({ success: 1, data: foundCard });
   } catch (err) {
     console.log(err);
     res.status(500).send({
@@ -58,6 +67,51 @@ app.get("/random-card", async (req, res) => {
     }
 
     res.send({ success: 1, data: cards[0] });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      success: 0,
+      data: null,
+    });
+  }
+});
+
+app.post("/new-card", async (req, res) => {
+  try {
+    const newCard = req.body;
+
+    console.log(newCard);
+
+    const saveCard = await CardModel.create(newCard);
+
+    res.send({ success: 1, data: saveCard });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      success: 0,
+      data: null,
+    });
+  }
+});
+
+app.put("/edit/:id", async (req, res) => {
+  try {
+    const cardId = req.params.id;
+
+    const { category, front, back, remember } = req.body;
+    
+    const saveCard = await CardModel.findByIdAndUpdate(
+      cardId,
+      {
+        category: category,
+        front: front,
+        back: back,
+        remember: remember,
+      },
+      { new: true }
+    );
+
+    res.send({ success: 1, data: saveCard });
   } catch (err) {
     console.log(err);
     res.status(500).send({

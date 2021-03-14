@@ -1,0 +1,13 @@
+#main-container {
+  height: calc(100vh - 56px - 16px);
+}
+
+#edit-form {
+  width: 100%;
+}
+
+#save-btn,
+.form-control,
+.input-group {
+  width: 50%;
+}

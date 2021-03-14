@@ -1,17 +1,21 @@
 let cardId = "";
 
 $(() => {
-  console.log("Page loaded");
+  console.log("Page loaded...");
 
   renderCard();
 
   $(".flip-card").on("click", () => {
-    // console.log("Flip clicked");
     $(".flip-card").toggleClass("card-flipped");
   });
 
-  $("#edit-btn").on("click", () => {
-    console.log("Edit clicked");
+  $("#edit-btn").on("click", async () => {
+    console.log("Edit clicked", cardId);
+    await $.ajax({
+      url: `http://localhost:6969/card/${cardId}`,
+      method: "GET",
+    });
+    window.location.href = `/card/${cardId}`;
   });
 
   $("#remember-btn").on("click", () => {
@@ -45,7 +49,7 @@ $(() => {
   });
 
   $("#next-btn").on("click", () => {
-    console.log("Next clicked");
+    renderCard();
   });
 });
 

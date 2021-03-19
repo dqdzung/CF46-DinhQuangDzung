@@ -57,12 +57,77 @@ app.get("/api/flashcards/random", async (req, res) => {
   }
 });
 
+app.get("/api/flashcards/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const foundCard = await CardModel.findById(id);
+
+    if (!foundCard) {
+      return res.send({ success: 0 });
+    }
+    res.send({
+      success: 1,
+      data: foundCard,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ success: 0 });
+  }
+});
+
+app.put("/api/flashcards/:id", async (req, res) => {
+  const { id } = req.params;
+  const updateData = req.body;
+
+  try {
+    const updatedCard = await CardModel.findByIdAndUpdate(id, updateData, {
+      new: true,
+    });
+
+    if (!updatedCard) {
+      return res.send({ success: 0, data: null });
+    }
+    res.send({ success: 1, data: updatedCard });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ success: 0 });
+  }
+});
+
+app.get("/api/flashcards/random", async (req, res) => {
+  try {
+    const { category } = req.query;
+    let randomCards = [];
+    if (category === "all") {
+      randomCards = await CardModel.aggregate().sample(1);
+    } else {
+      randomCards = await CardModel.aggregate().match({ category }).sample(1);
+    }
+
+    if (!randomCards.length) {
+      return res.status(404).send({ success: 0 });
+    }
+
+    res.send({
+      success: 1,
+      data: randomCards[0],
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ success: 0 });
+  }
+});
+
 app.get("/", (req, res) => {
   res.sendFile(path.resolve(__dirname, "./public/html/home.html"));
 });
 
 app.get("/create", (req, res) => {
   res.sendFile(path.resolve(__dirname, "./public/html/create.html"));
+});
+
+app.get("/edit/flashcards/:id", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "./public/html/edit.html"));
 });
 
 app.listen(PORT, (err) => {

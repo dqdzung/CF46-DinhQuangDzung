@@ -106,20 +106,24 @@
       <div class="flip-card">
         <div class="flip-card-inner">
           <div
-            class="flip-card-front d-flex justify-content-center align-items-center"
+            class="flip-card-front d-flex flex-column justify-content-center align-items-center"
           >
-            <h1>Front</h1>
+            <h2 id="category"></h2>
+            <h1 id="front">Front</h1>
           </div>
           <div
-            class="flip-card-back d-flex justify-content-center align-items-center"
+            class="flip-card-back d-flex flex-column justify-content-center align-items-center"
           >
-            <h1>Back</h1>
+            <h1 id="back">Back</h1>
           </div>
         </div>
       </div>
       <div class="d-flex justify-content-center m-4">
-        <button id="flip-btn" class="btn btn-primary">Flip</button>
-        <button id="next-btn" class="btn btn-success">Next</button>
+        <button id="flip-btn" class="btn btn-primary me-1">Flip</button>
+        <button id="remember-btn" class="btn btn-success me-1">Remember</button>
+        <button id="forget-btn" class="btn btn-danger me-1" style="display: none">Forget</button>
+        <button id="edit-btn" class="btn btn-dark me-1">Edit</button>
+        <button id="next-btn" class="btn btn-warning me-1">Next</button>
       </div>
     </div>
   </body>

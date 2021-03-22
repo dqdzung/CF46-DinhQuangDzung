@@ -1,14 +1,6 @@
-
-
-.form {
-  width: 100%;
-  margin: 15px 0;
+.App #main-container {
+  width: 70%;
 }
-
-.form input {
-  width: 100%;
-}
-
 .image-container {
   margin: 20px 0;
 }

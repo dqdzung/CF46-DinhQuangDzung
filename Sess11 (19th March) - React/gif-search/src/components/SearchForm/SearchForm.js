@@ -1,4 +1,5 @@
 import React from "react";
+import "./searchForm.style.css"
 
 class SearchForm extends React.Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class SearchForm extends React.Component {
           value={this.state.keyword}
           onChange={this.handleFormChange}
         />
-        
+        {this.renderButton()}
       </div>
     );
   }

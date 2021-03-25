@@ -1,5 +1,5 @@
 import React from "react";
-import "./searchForm.style.css"
+import "./searchForm.style.css";
 
 class SearchForm extends React.Component {
   constructor(props) {
@@ -7,10 +7,10 @@ class SearchForm extends React.Component {
     this.state = { keyword: "" };
   }
 
-  handleFormChange = (event) => {
+  handleFormChange(event) {
     console.log(event.target.value);
     this.setState({ keyword: event.target.value });
-  };
+  }
 
   renderButton() {
     if (this.state.keyword.length > 0) {
@@ -30,7 +30,7 @@ class SearchForm extends React.Component {
           type="text"
           className="form-control"
           value={this.state.keyword}
-          onChange={this.handleFormChange}
+          onChange={this.handleFormChange()}
         />
         {this.renderButton()}
       </div>

@@ -1,0 +1,20 @@
+.App .main-container {
+  width: 70%;
+}
+
+.App .main-container h1 {
+  text-align: center;
+}
+
+.App .main-container .add-form  {
+  width: 100%;
+}
+
+.App .list-group {
+  width: 100%;
+}
+
+.App h1 img {
+  width: 5%;
+}
+

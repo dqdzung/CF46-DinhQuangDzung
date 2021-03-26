@@ -2,6 +2,7 @@ import React from "react";
 import Header from "./components/Header";
 import SearchForm from "./components/SearchForm/SearchForm";
 import ImageContainer from "./components/ImageContainer/ImageContainer";
+import Loading from "./components/Loading/Loading";
 import "./App.css";
 
 class App extends React.Component {
@@ -9,27 +10,40 @@ class App extends React.Component {
     super(props);
     this.state = {
       label: "Gif me!!!!!",
-      images: [
-        {
-          imgUrl: "https://media.giphy.com/media/H0EBDM4Vk6880/giphy.gif",
-          caption: "shaq",
-        },
-        {
-          imgUrl: "https://media.giphy.com/media/Rxt5Nxbl3KM3DhyxZm/giphy.gif",
-          caption: "wiggle",
-        },
-        {
-          imgUrl: "https://media.giphy.com/media/LmYoDjbWL0RkFcRoeb/giphy.gif",
-          caption: "cat",
-        },
-      ],
+      images: [],
+      isLoading: false,
     };
   }
-  componentDidMount() {
-    setInterval(() => {
-      this.setState({ label: "Let's Search!!!!" });
-    }, 3000);
-  }
+
+  changeImages = (newImages, offset) => {
+    if (offset === 0) {
+      this.setState({ images: newImages, isLoading: false });
+    } else {
+      this.setState((prevState) => {
+        return {
+          images: [...prevState.images, ...newImages],
+          isLoading: false,
+        };
+      });
+    }
+  };
+
+  changeLoading = (newLoading) => {
+    this.setState({ isLoading: newLoading });
+  };
+
+  renderImages = () => {
+    const {images} = this.state;
+    return images.map((image, index) => {
+      return (
+        <ImageContainer
+          key={index}
+          imgUrl={image.imgUrl}
+          caption={image.caption}
+        />
+      );
+    });
+  };
 
   render() {
     return (
@@ -38,19 +52,13 @@ class App extends React.Component {
           id="main-container"
           className="d-flex flex-column align-items-center"
         >
-          <Header label={this.state.label}></Header>
-          <SearchForm></SearchForm>
-          <div className="content">
-            {this.state.images.map((image, idx) => {
-              return (
-                <ImageContainer
-                  key={idx}
-                  imgUrl={image.imgUrl}
-                  caption={image.caption}
-                ></ImageContainer>
-              );
-            })}
-          </div>
+          <Header label={this.state.label} />
+          <SearchForm
+            changeImages={this.changeImages}
+            changeLoading={this.changeLoading}
+          />
+          <div className="content">{this.renderImages()}</div>
+          {this.state.isLoading && <Loading/>}
         </div>
       </div>
     );

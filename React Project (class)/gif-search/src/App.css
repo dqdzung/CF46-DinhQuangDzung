@@ -1,0 +1,12 @@
+.App #main-container {
+  width: 70%;
+}
+.image-container {
+  margin: 20px 0;
+}
+
+.image-inner img {
+  width: 250px;
+  margin-right: 10px;
+}
+

@@ -2,9 +2,9 @@ const express = require("express");
 const Router = new express.Router();
 const CommentController = require("./comment.controller");
 
-Router.get("/show-comment/", async (req, res) => {
+Router.get("/:postId", async (req, res) => {
 	try {
-		const { postId } = req.body;
+		const { postId } = req.params;
 
 		const comments = await CommentController.showComment({ postId });
 		res.send({

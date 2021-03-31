@@ -1,5 +1,4 @@
 const CommentModel = require("./comment");
-const PostController = require("../post/post.controller");
 
 const showComment = async ({ postId }) => {
 	try {

@@ -9,18 +9,18 @@ const PostRouter = require("./modules/post/post.router");
 const CommentRouter = require("./modules/comment/comment.router");
 
 mongoose.connect(
-  "mongodb://localhost:27017/image-host",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  },
-  (err) => {
-    if (err) {
-      return console.log("Mongo err", err);
-    }
+	"mongodb://localhost:27017/image-host",
+	{
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+	},
+	(err) => {
+		if (err) {
+			return console.log("Mongo err", err);
+		}
 
-    console.log("MongoDB Server connected...");
-  }
+		console.log("MongoDB Server connected...");
+	}
 );
 
 app.use(express.json());
@@ -30,12 +30,12 @@ app.use("/api/post", PostRouter);
 app.use("/api/comment", CommentRouter);
 
 app.use("*", (req, res) => {
-  res.send({ success: 0, message: "404 not found" });
+	res.send({ success: 0, message: "404 not found" });
 });
 
 app.listen(8080, (err) => {
-  if (err) {
-    return console.log("Server err", err);
-  }
-  console.log(`Server started...`);
+	if (err) {
+		return console.log("Server err", err);
+	}
+	console.log(`Server started...`);
 });

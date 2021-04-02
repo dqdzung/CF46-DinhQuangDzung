@@ -33,7 +33,7 @@ app.use("*", (req, res) => {
 	res.send({ success: 0, message: "404 not found" });
 });
 
-app.listen(8080, (err) => {
+app.listen(9000, (err) => {
 	if (err) {
 		return console.log("Server err", err);
 	}

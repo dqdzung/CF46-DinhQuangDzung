@@ -1,11 +1,21 @@
 const PostModel = require("./post");
 
-const showPost = async ({ postId }) => {
-	const foundPost = await PostModel.findOne({ postId });
+const getPosts = async ({ offset, limit }) => {
+	// const posts = await PostModel.find().skip(offset).limit(limit);
 
-	if (!foundPost) throw new Error("Post not found!");
+	// e.g. offset 1, limit 10 => 1 - 10
+	//      offset 20, limit 6 => 20 - 25
+	// => offset is the starting point
 
-	return foundPost;
+	// const total = await PostModel.countDocuments();
+
+	// Promise.all(array) for unrelated promises
+	const [posts, total] = await Promise.all([
+		PostModel.find().skip(offset).limit(limit),
+		PostModel.countDocuments(),
+	]);
+
+	return [total, posts];
 };
 
 const createPost = async ({ imageUrl, title, description, createdBy }) => {
@@ -19,4 +29,4 @@ const createPost = async ({ imageUrl, title, description, createdBy }) => {
 	return newPost;
 };
 
-module.exports = { showPost, createPost };
+module.exports = { getPosts, createPost };

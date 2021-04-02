@@ -1,6 +1,7 @@
 const express = require("express");
 const Router = new express.Router();
 const CommentController = require("./comment.controller");
+const { tokenAuth } = require("../../middleware/tokenAuth");
 
 Router.get("/:postId", async (req, res) => {
 	try {
@@ -19,7 +20,7 @@ Router.get("/:postId", async (req, res) => {
 	}
 });
 
-Router.post("/add-comment", async (req, res) => {
+Router.post("/", tokenAuth, async (req, res) => {
 	try {
 		const { content, createdBy, postId } = req.body;
 

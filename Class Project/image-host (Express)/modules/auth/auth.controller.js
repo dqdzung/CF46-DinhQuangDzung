@@ -1,5 +1,6 @@
 const UserModel = require("./user");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const createUser = async ({ email, password }) => {
 	const existedUser = await UserModel.findOne({ email });
@@ -25,7 +26,12 @@ const login = async ({ email, password }) => {
 
 	if (!comparePassword) throw new Error("Password is wrong!");
 
-	return existedUser;
+	// mã hóa thông tin và tạo token
+	const data = { userId: existedUser._id };
+
+	const token = jwt.sign(data, "CF46", { expiresIn: 360000 });
+
+	return { user: existedUser, token };
 };
 
 module.exports = { createUser, login };

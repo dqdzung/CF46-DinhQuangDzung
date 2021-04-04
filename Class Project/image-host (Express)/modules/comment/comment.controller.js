@@ -2,13 +2,11 @@ const CommentModel = require("./comment");
 const PostModel = require("../post/post");
 
 const getComment = async ({ postId }) => {
-	try {
-		const foundComments = await CommentModel.find({ postId });
+	const foundComments = await CommentModel.find({ postId });
 
-		return foundComments;
-	} catch (err) {
-		console.log(err);
-	}
+	if (!foundComments) throw new Error("No Comments");
+
+	return foundComments;
 };
 
 const addComment = async ({ content, createdBy, postId }) => {

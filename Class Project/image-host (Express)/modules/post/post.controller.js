@@ -1,4 +1,5 @@
 const PostModel = require("./post");
+const CommentController = require("../comment/comment.controller");
 
 const getPosts = async ({ offset, limit }) => {
 	// const posts = await PostModel.find().skip(offset).limit(limit);
@@ -18,6 +19,20 @@ const getPosts = async ({ offset, limit }) => {
 	return [total, posts];
 };
 
+const getPost = async (postId) => {
+	const foundPost = await PostModel.findById(postId);
+
+	if (!foundPost) throw new Error("Post not found!");
+
+	const comments = await CommentController.getComment({ postId });
+
+	foundPost.comments = comments;
+
+	console.log(foundPost);
+
+	return foundPost;
+};
+
 const createPost = async ({ imageUrl, title, description, createdBy }) => {
 	const newPost = await PostModel.create({
 		imageUrl,
@@ -29,4 +44,4 @@ const createPost = async ({ imageUrl, title, description, createdBy }) => {
 	return newPost;
 };
 
-module.exports = { getPosts, createPost };
+module.exports = { getPost, getPosts, createPost };

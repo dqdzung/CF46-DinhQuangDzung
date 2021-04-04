@@ -14,8 +14,10 @@ const PostSchema = new mongoose.Schema(
 			type: String,
 		},
 		createdBy: {
-			type: mongoose.Types.ObjectId,
+			id: { type: mongoose.Types.ObjectId },
+			email: { type: String },
 		},
+		comments: [],
 	},
 	{ timestamps: true }
 );

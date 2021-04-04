@@ -7,7 +7,7 @@ Router.get("/:postId", async (req, res) => {
 	try {
 		const { postId } = req.params;
 
-		const comments = await CommentController.showComment({ postId });
+		const comments = await CommentController.getComment({ postId });
 		res.send({
 			success: 1,
 			data: comments,
@@ -22,7 +22,12 @@ Router.get("/:postId", async (req, res) => {
 
 Router.post("/", tokenAuth, async (req, res) => {
 	try {
-		const { content, createdBy, postId } = req.body;
+		const { content, postId } = req.body;
+
+		const createdBy = {
+			id: req.user._id,
+			email: req.user.email,
+		};
 
 		const newComment = await CommentController.addComment({
 			content,

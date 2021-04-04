@@ -37,6 +37,24 @@ Router.get(
 	}
 );
 
+Router.get("/:id", async (req, res) => {
+	try {
+		const { id } = req.params;
+
+		const foundPost = await PostController.getPost(id);
+
+		res.send({
+			success: 1,
+			data: foundPost,
+		});
+	} catch (err) {
+		res.status(500).send({
+			success: 0,
+			message: err.message,
+		});
+	}
+});
+
 Router.post(
 	"/",
 	// middleware to authorize token
@@ -45,7 +63,10 @@ Router.post(
 		try {
 			const { imageUrl, title, description } = req.body;
 
-			const createdBy = req.user._id;
+			const createdBy = {
+				id: req.user._id,
+				email: req.user.email,
+			};
 
 			const newPost = await PostController.createPost({
 				imageUrl,

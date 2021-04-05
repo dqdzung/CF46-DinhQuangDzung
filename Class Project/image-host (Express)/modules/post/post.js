@@ -14,12 +14,17 @@ const PostSchema = new mongoose.Schema(
 			type: String,
 		},
 		createdBy: {
-			id: { type: mongoose.Types.ObjectId },
-			email: { type: String },
+			type: mongoose.Types.ObjectId,
+			ref: "user",
 		},
-		comments: [],
 	},
-	{ timestamps: true }
+	{ timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
+
+PostSchema.virtual("comments", {
+	ref: "comment", //model to use
+	localField: "_id",
+	foreignField: "post",
+});
 
 module.exports = mongoose.model("post", PostSchema);

@@ -12,7 +12,11 @@ const getPosts = async ({ offset, limit }) => {
 
 	// Promise.all(array) for unrelated promises
 	const [posts, total] = await Promise.all([
-		PostModel.find().skip(offset).limit(limit),
+		PostModel.find()
+			.skip(offset)
+			.limit(limit)
+			.select("-__v")
+			.populate({ path: "createdBy", select: "-password" }),
 		PostModel.countDocuments(),
 	]);
 
@@ -20,11 +24,18 @@ const getPosts = async ({ offset, limit }) => {
 };
 
 const getPost = async (postId) => {
-	const foundPost = await PostModel.findById(postId);
+	const foundPost = await PostModel.findById(postId)
+		.populate("createdBy", "email")
+		.populate({
+			path: "comments",
+			populate: {
+				path: "createdBy",
+			},
+		});
 
 	if (!foundPost) throw new Error("Post not found!");
 
-	const comments = await CommentController.getComment({ postId });
+	const comments = await CommentController.getComment(postId);
 
 	foundPost.comments = comments;
 

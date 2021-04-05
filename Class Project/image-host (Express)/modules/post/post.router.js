@@ -63,10 +63,7 @@ Router.post(
 		try {
 			const { imageUrl, title, description } = req.body;
 
-			const createdBy = {
-				id: req.user._id,
-				email: req.user.email,
-			};
+			const createdBy = req.user._id;
 
 			const newPost = await PostController.createPost({
 				imageUrl,

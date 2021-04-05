@@ -1,8 +1,10 @@
 const CommentModel = require("./comment");
 const PostModel = require("../post/post");
 
-const getComment = async ({ postId }) => {
-	const foundComments = await CommentModel.find({ postId });
+const getComment = async (postId) => {
+	const foundComments = await CommentModel.find({ postId: postId })
+		.populate("createdBy", "email")
+		.populate("postId", "title");
 
 	if (!foundComments) throw new Error("No Comments");
 

@@ -29,7 +29,7 @@ Router.post("/login", async (req, res) => {
 			data: foundUser,
 		});
 	} catch (err) {
-		res.status(500).send({
+		res.send({
 			success: 0,
 			message: err.message,
 		});

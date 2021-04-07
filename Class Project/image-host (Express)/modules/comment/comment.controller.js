@@ -2,7 +2,7 @@ const CommentModel = require("./comment");
 const PostModel = require("../post/post");
 
 const getComment = async (postId) => {
-	const foundComments = await CommentModel.find({ postId: postId })
+	const foundComments = await CommentModel.find({ post: postId })
 		.populate("createdBy", "email")
 		.populate("postId", "title");
 
@@ -11,12 +11,12 @@ const getComment = async (postId) => {
 	return foundComments;
 };
 
-const addComment = async ({ content, createdBy, postId }) => {
-	const existedPost = await PostModel.findById(postId);
+const addComment = async ({ content, createdBy, post }) => {
+	const existedPost = await PostModel.findById(post);
 
 	if (!existedPost) throw new Error("Post not found!");
 
-	const newComment = await CommentModel.create({ content, createdBy, postId });
+	const newComment = await CommentModel.create({ content, createdBy, post });
 
 	return newComment;
 };

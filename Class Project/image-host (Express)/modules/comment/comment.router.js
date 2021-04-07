@@ -23,14 +23,14 @@ Router.get("/posts/:postId", async (req, res) => {
 
 Router.post("/", tokenAuth, async (req, res) => {
 	try {
-		const { content, postId } = req.body;
+		const { content, post } = req.body;
 
 		const createdBy = req.user._id;
 
 		const newComment = await CommentController.addComment({
 			content,
 			createdBy,
-			postId,
+			post,
 		});
 		res.send({
 			success: 1,

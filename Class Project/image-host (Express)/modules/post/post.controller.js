@@ -39,7 +39,7 @@ const getPost = async (postId) => {
 
 	foundPost.comments = comments;
 
-	console.log(foundPost);
+	// console.log(foundPost);
 
 	return foundPost;
 };

@@ -7,6 +7,7 @@ const SignUp = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [passConfirm, setPassConfirm] = useState("");
+	const [message, setMessage] = useState("");
 
 	const handleEmailChange = (e) => {
 		setEmail(e.target.value);
@@ -20,11 +21,47 @@ const SignUp = () => {
 		setPassConfirm(e.target.value);
 	};
 
+	let isMatched;
+	const validate = (password, passwordConfirm) => {
+		password === passwordConfirm ? (isMatched = true) : (isMatched = false);
+		if (!isMatched) {
+			setMessage("Password doesn't match!");
+		} else {
+			setMessage("");
+		}
+		return isMatched;
+	};
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+
+		if (isMatched) {
+			const res = await axios({
+				url: "http://localhost:8080/api/auth/signup",
+				method: "POST",
+				data: {
+					email,
+					password,
+				},
+			});
+			if (res.data.success) {
+				alert("Sign up successfully!!!");
+				clearInput();
+			}
+		}
+	};
+
+	const clearInput = () => {
+		setEmail("");
+		setPassword("");
+		setPassConfirm("");
+	};
+
 	return (
 		<AuthLayout>
 			<div className="form-wrapper">
 				<h3 className="text-center">Sign Up</h3>
-				<Form onSubmit>
+				<Form onSubmit={handleSubmit}>
 					<Form.Group controlId="formBasicEmail">
 						<Form.Label>Email</Form.Label>
 						<Form.Control
@@ -41,6 +78,9 @@ const SignUp = () => {
 							placeholder="Password"
 							value={password}
 							onChange={handlePassChange}
+							onKeyUp={() => {
+								validate(password, passConfirm);
+							}}
 						/>
 					</Form.Group>
 					<Form.Group controlId="formBasicPassword">
@@ -50,8 +90,12 @@ const SignUp = () => {
 							placeholder="Re-enter password"
 							value={passConfirm}
 							onChange={handlePassConfirm}
+							onKeyUp={() => {
+								validate(password, passConfirm);
+							}}
 						/>
 					</Form.Group>
+					<span style={{ color: "red" }}>{message}</span>
 					<Button className="mt-4" variant="success" type="submit" block>
 						Sign Up
 					</Button>

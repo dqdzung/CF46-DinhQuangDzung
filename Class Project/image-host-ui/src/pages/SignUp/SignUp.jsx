@@ -1,6 +1,7 @@
 import AuthLayout from "../../components/Layout/AuthLayout";
 import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const SignUp = () => {
@@ -23,8 +24,7 @@ const SignUp = () => {
 	};
 
 	const validate = (password, passwordConfirm) => {
-		let isMatched;
-		password === passwordConfirm ? (isMatched = true) : (isMatched = false);
+		let isMatched = password === passwordConfirm;
 		if (!isMatched) {
 			setMessage("Password doesn't match!");
 		} else {
@@ -37,17 +37,21 @@ const SignUp = () => {
 		e.preventDefault();
 
 		if (!message) {
-			const res = await axios({
-				url: "http://localhost:8080/api/auth/signup",
-				method: "POST",
-				data: {
-					email,
-					password,
-				},
-			});
-			if (res.data.success) {
-				alert("Sign up successfully!!!");
-				clearInput();
+			try {
+				const res = await axios({
+					url: "http://localhost:8080/api/auth/signup",
+					method: "POST",
+					data: {
+						email,
+						password,
+					},
+				});
+				if (res.data.success) {
+					alert("Sign up successfully!!!");
+					clearInput();
+				}
+			} catch (err) {
+				return err.message;
 			}
 		}
 	};
@@ -81,7 +85,7 @@ const SignUp = () => {
 							onChange={handlePassChange}
 						/>
 					</Form.Group>
-					<Form.Group controlId="formBasicPassword">
+					<Form.Group controlId="formBasicPasswordConfirm">
 						<Form.Label>Password Confirmation</Form.Label>
 						<Form.Control
 							type="password"
@@ -91,10 +95,19 @@ const SignUp = () => {
 						/>
 					</Form.Group>
 					<span style={{ color: "red" }}>{message}</span>
-					<Button className="mt-4" variant="success" type="submit" block>
+					<Button
+						className="mt-4"
+						variant="success"
+						type="submit"
+						block
+						disabled={message}
+					>
 						Sign Up
 					</Button>
 				</Form>
+				<div className="navigate mt-3">
+					Already have an account? <Link to="/login">Login</Link>
+				</div>
 			</div>
 		</AuthLayout>
 	);

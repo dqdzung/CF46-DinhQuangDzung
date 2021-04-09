@@ -1,7 +1,8 @@
 import AuthLayout from "../../components/Layout/AuthLayout";
 import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
-import axios from "axios";
+import { Link } from "react-router-dom";
+import client from "../../api";
 
 const Login = () => {
 	const [email, setEmail] = useState("");
@@ -18,8 +19,8 @@ const Login = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		const res = await axios({
-			url: "http://localhost:8080/api/auth/login",
+		const res = await client({
+			url: "api/auth/login",
 			method: "POST",
 			data: {
 				email,
@@ -60,6 +61,9 @@ const Login = () => {
 						Login
 					</Button>
 				</Form>
+				<div className="navigate mt-3">
+					Don't have an account? <Link to="/signup">Sign Up</Link>
+				</div>
 			</div>
 		</AuthLayout>
 	);

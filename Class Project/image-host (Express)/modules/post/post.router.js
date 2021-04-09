@@ -9,7 +9,7 @@ const { tokenAuth } = require("../../middleware/tokenAuth");
 Router.get(
 	"/",
 	(req, res, next) => {
-		console.log("Middleware here...");
+		// console.log("Middleware here...");
 		next();
 	},
 	async (req, res) => {

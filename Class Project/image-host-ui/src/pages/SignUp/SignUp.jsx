@@ -19,6 +19,7 @@ const SignUp = () => {
 
 	const handlePassConfirm = (e) => {
 		setPassConfirm(e.target.value);
+		validate(password, e.target.value);
 	};
 
 	const validate = (password, passwordConfirm) => {
@@ -78,9 +79,6 @@ const SignUp = () => {
 							placeholder="Password"
 							value={password}
 							onChange={handlePassChange}
-							onKeyUp={() => {
-								validate(password, passConfirm);
-							}}
 						/>
 					</Form.Group>
 					<Form.Group controlId="formBasicPassword">
@@ -90,9 +88,6 @@ const SignUp = () => {
 							placeholder="Re-enter password"
 							value={passConfirm}
 							onChange={handlePassConfirm}
-							onKeyUp={() => {
-								validate(password, passConfirm);
-							}}
 						/>
 					</Form.Group>
 					<span style={{ color: "red" }}>{message}</span>

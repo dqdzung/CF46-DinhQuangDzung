@@ -21,8 +21,8 @@ const SignUp = () => {
 		setPassConfirm(e.target.value);
 	};
 
-	let isMatched;
 	const validate = (password, passwordConfirm) => {
+		let isMatched;
 		password === passwordConfirm ? (isMatched = true) : (isMatched = false);
 		if (!isMatched) {
 			setMessage("Password doesn't match!");
@@ -35,7 +35,7 @@ const SignUp = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		if (isMatched) {
+		if (!message) {
 			const res = await axios({
 				url: "http://localhost:8080/api/auth/signup",
 				method: "POST",

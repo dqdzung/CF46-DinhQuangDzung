@@ -1,44 +1,52 @@
 import { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import PostContainer from "../../components/PostContainer/PostContainer";
+import PaginationComp from "../../components/Pagination/Pagination";
+import Loading from "../../components/Loading/Loading";
 import client from "../../api";
 
 const Home = () => {
 	const [posts, setPosts] = useState([]);
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
+	const [activePage, setActivePage] = useState(1);
+	const [total, setTotal] = useState(0);
+
 	//useEffect is a combination of componentDidMount() and componentDidUpdate()
 	//syntax: useEffect(arg1, arg2)
 	//  arg1: function to run
 	//  arg2: dependency to run the function
 	// useEffect runs after render() once, and then only run if there's change in the dependency array
 
-	const fetchPosts = async () => {
+	const fetchPosts = async (page = 1, pageSize = 4) => {
 		setLoading(true);
 		try {
 			const res = await client({
 				url: "api/post",
 				method: "GET",
-				query: {
-					page: 1,
-					pageSize: 4,
+				params: {
+					page: page,
+					pageSize: pageSize,
 				},
 			});
 			setLoading(false);
-			console.log(res.data);
+			// console.log(res.data);
 			if (res.data.success) {
 				setPosts(res.data.data.data);
+				const totalPage = res.data.data.total;
+				setTotal((totalPage + 4 - 1) / 4);
 			}
 		} catch (err) {
 			console.log(err);
 		}
 	};
+
 	useEffect(() => {
-		console.log("Run effect");
+		// console.log("Run effect");
 		fetchPosts();
 	}, []);
 
 	const renderPosts = () => {
-		if (loading) return <div>Loading...</div>;
+		if (loading) return <Loading></Loading>;
 
 		if (!posts.length) return <div>No posts...</div>;
 
@@ -54,7 +62,21 @@ const Home = () => {
 		));
 	};
 
-	return <Row className="mt-4">{renderPosts()}</Row>;
+	const handlePageChange = (number) => {
+		setActivePage(number);
+		fetchPosts(number);
+	};
+
+	return (
+		<div>
+			<Row className="mt-4">{renderPosts()}</Row>
+			<PaginationComp
+				active={activePage}
+				total={total}
+				onPageChange={handlePageChange}
+			></PaginationComp>
+		</div>
+	);
 };
 
 export default Home;

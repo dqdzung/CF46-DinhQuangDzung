@@ -61,13 +61,13 @@ function App() {
 						<PublicRoute path="/" exact>
 							<Home></Home>
 						</PublicRoute>
-						<GuestRoute path="/login" user={user}>
+						<GuestRoute path="/login">
 							<Login></Login>
 						</GuestRoute>
-						<GuestRoute path="/signup" user={user}>
+						<GuestRoute path="/signup">
 							<SignUp></SignUp>
 						</GuestRoute>
-						<ProtectedRoute path="/create" user={user}>
+						<ProtectedRoute path="/create">
 							<div>Create</div>
 						</ProtectedRoute>
 						<PublicRoute path="/posts/:id">

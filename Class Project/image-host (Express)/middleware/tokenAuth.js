@@ -9,7 +9,9 @@ const tokenAuth = async (req, res, next) => {
 		const decodeData = jwt.verify(token, "CF46");
 
 		const { userId } = decodeData;
-		const existedUser = await UserModel.findById(userId);
+		const existedUser = await UserModel.findById(userId).select(
+			"-password -__v"
+		);
 
 		if (!existedUser) throw new Error("User not existed!");
 

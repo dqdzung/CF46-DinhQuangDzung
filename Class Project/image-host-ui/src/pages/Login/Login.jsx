@@ -1,12 +1,13 @@
 import AuthLayout from "../../components/Layout/AuthLayout";
 import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import client from "../../api";
 
 const Login = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const history = useHistory();
 
 	const handleEmailChange = (e) => {
 		setEmail(e.target.value);
@@ -28,7 +29,9 @@ const Login = () => {
 			},
 		});
 		if (res.data.success) {
-			alert("Login success!!!");
+			const { user, token } = res.data.data;
+			localStorage.setItem("token", token);
+			history.push("/");
 		} else {
 			alert("Wrong Email or Password!!!");
 		}

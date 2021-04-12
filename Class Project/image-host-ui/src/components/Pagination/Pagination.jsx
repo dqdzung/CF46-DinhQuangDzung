@@ -17,7 +17,7 @@ const PaginationComp = (props) => {
 		);
 	}
 	return (
-		<div className="container">
+		<div className="pagination-container">
 			<Pagination className="mt-5" size="lg">
 				{items}
 			</Pagination>

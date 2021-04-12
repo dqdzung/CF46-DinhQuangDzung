@@ -33,7 +33,7 @@ const Home = () => {
 			if (res.data.success) {
 				setPosts(res.data.data.data);
 				const totalPage = res.data.data.total;
-				setTotal((totalPage + 4 - 1) / 4);
+				setTotal((totalPage + pageSize - 1) / pageSize);
 			}
 		} catch (err) {
 			console.log(err);
@@ -42,8 +42,8 @@ const Home = () => {
 
 	useEffect(() => {
 		// console.log("Run effect");
-		fetchPosts();
-	}, []);
+		fetchPosts(activePage);
+	}, [activePage]);
 
 	const renderPosts = () => {
 		if (loading) return <Loading></Loading>;
@@ -62,9 +62,8 @@ const Home = () => {
 		));
 	};
 
-	const handlePageChange = (number) => {
-		setActivePage(number);
-		fetchPosts(number);
+	const handlePageChange = (pageNumber) => {
+		setActivePage(pageNumber);
 	};
 
 	return (

@@ -1,7 +1,12 @@
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../App";
+import { useContext } from "react";
 
 export default function NavComp() {
+	const { user } = useContext(AuthContext);
+	console.log(user);
+
 	return (
 		<Navbar bg="dark" variant="dark" expand="lg">
 			<Container>

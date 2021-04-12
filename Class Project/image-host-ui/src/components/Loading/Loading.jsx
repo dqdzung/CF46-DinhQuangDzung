@@ -3,7 +3,7 @@ import "./loading.css";
 
 function Loading() {
 	return (
-		<div className="container">
+		<div className="loading-container">
 			<Spinner animation="border" variant="primary" />
 			<Spinner animation="border" variant="secondary" />
 			<Spinner animation="border" variant="success" />

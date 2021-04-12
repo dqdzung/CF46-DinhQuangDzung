@@ -1,6 +1,7 @@
 const express = require("express");
 const Router = new express.Router();
 const AuthController = require("./auth.controller.js");
+const { tokenAuth } = require("../../middleware/tokenAuth");
 
 Router.post("/signup", async (req, res) => {
 	try {
@@ -27,6 +28,22 @@ Router.post("/login", async (req, res) => {
 		res.send({
 			success: 1,
 			data: foundUser,
+		});
+	} catch (err) {
+		res.send({
+			success: 0,
+			message: err.message,
+		});
+	}
+});
+
+Router.get("/user", tokenAuth, async (req, res) => {
+	try {
+		const user = req.user;
+
+		res.send({
+			success: 1,
+			data: user,
 		});
 	} catch (err) {
 		res.send({

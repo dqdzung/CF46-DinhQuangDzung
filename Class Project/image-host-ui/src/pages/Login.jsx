@@ -1,9 +1,9 @@
-import AuthLayout from "../../components/Layout/AuthLayout";
+import AuthLayout from "../components/Layout/AuthLayout";
 import { Form, Button } from "react-bootstrap";
 import { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
-import client from "../../api";
-import { AuthContext } from "../../App";
+import client from "../api";
+import { AuthContext } from "../App";
 
 const Login = () => {
 	const [email, setEmail] = useState("");

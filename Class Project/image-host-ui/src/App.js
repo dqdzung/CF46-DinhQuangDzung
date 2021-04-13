@@ -3,9 +3,10 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import Home from "./pages/Home/Home";
-import Login from "./pages/Login/Login";
-import SignUp from "./pages/SignUp/SignUp";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
+import Detail from "./pages/Detail";
 import MainLayout from "./components/Layout/MainLayout";
 import Loading from "./components/Loading/Loading";
 import PublicRoute from "./components/Route/Public";
@@ -70,8 +71,8 @@ function App() {
 						<ProtectedRoute path="/create">
 							<div>Create</div>
 						</ProtectedRoute>
-						<PublicRoute path="/posts/:id">
-							<div>Detail</div>
+						<PublicRoute path="/post/:id">
+							<Detail></Detail>
 						</PublicRoute>
 						<Route path="*">
 							<div>404</div>

@@ -3,5 +3,7 @@
 }
 
 .main-layout .content {
+	display: flex;
+	justify-content: center;
 	height: calc(100vh - 56px);
 }

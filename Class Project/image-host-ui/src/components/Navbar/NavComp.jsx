@@ -9,9 +9,13 @@ export default function NavComp() {
 	const history = useHistory();
 
 	const handleLogout = () => {
-		localStorage.removeItem("token");
-		setUser(null);
-		history.push("/login");
+		const logOutConfirm = window.confirm("Are you sure?");
+
+		if (logOutConfirm) {
+			localStorage.removeItem("token");
+			setUser(null);
+			// history.push("/login");
+		}
 	};
 
 	return (
@@ -23,17 +27,18 @@ export default function NavComp() {
 					{!user ? (
 						<Nav className="mr-auto">
 							<Nav.Item className="mx-2">
-								<Link to="login">Login</Link>
+								<Link to="/login">Login</Link>
 							</Nav.Item>
 							<Nav.Item className="mx-2">
-								<Link to="signup">Sign Up</Link>
+								<Link to="/signup">Sign Up</Link>
 							</Nav.Item>
 						</Nav>
 					) : (
 						<Nav className="ml-auto">
-							<Navbar.Text>Welcome, {user.email}!</Navbar.Text>
-							<NavDropdown>
+							<Navbar.Text>Welcome,</Navbar.Text>
+							<NavDropdown title={user.email} id="basic-nav-dropdown">
 								<NavDropdown.Item>Upload</NavDropdown.Item>
+								<NavDropdown.Divider />
 								<NavDropdown.Item onClick={handleLogout}>
 									Logout
 								</NavDropdown.Item>

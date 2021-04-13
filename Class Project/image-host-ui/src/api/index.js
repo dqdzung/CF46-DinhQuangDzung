@@ -6,12 +6,12 @@ const customAxios = axios.create({
 
 // Trước khi request được gọi lên server, nó phải chạy vào đây trước
 customAxios.interceptors.request.use(
-	(config) => {
+	(req) => {
 		const token = localStorage.getItem("token");
 		if (token) {
-			config.headers.Authorization = token;
+			req.headers.Authorization = token;
 		}
-		return config;
+		return req;
 	},
 	function (err) {
 		return Promise.reject(err);

@@ -1,9 +1,21 @@
 import { Card } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 
 function PostContainer(props) {
+	const history = useHistory();
+
+	const toDetail = (id) => {
+		history.push(`/post/${id}`);
+	};
+
 	return (
 		<div>
-			<Card style={{ width: "100%" }}>
+			<Card
+				style={{ width: "100%" }}
+				onClick={() => {
+					toDetail(props.postId);
+				}}
+			>
 				<Card.Img variant="top" src={props.imageUrl} />
 				<Card.Body>
 					<Card.Title>{props.title}</Card.Title>

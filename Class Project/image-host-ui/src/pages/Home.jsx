@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
-import PostContainer from "../../components/PostContainer/PostContainer";
-import PaginationComp from "../../components/Pagination/Pagination";
-import Loading from "../../components/Loading/Loading";
-import client from "../../api";
+
+import PostContainer from "../components/PostContainer/PostContainer";
+import PaginationComp from "../components/Pagination/Pagination";
+import Loading from "../components/Loading/Loading";
+import client from "../api";
 
 const Home = () => {
 	const [posts, setPosts] = useState([]);
@@ -57,6 +58,7 @@ const Home = () => {
 					title={post.title}
 					description={post.description}
 					createdBy={post.createdBy.email}
+					postId={post._id}
 				></PostContainer>
 			</Col>
 		));

@@ -10,7 +10,7 @@ const PostRouter = require("./modules/post/post.router");
 const CommentRouter = require("./modules/comment/comment.router");
 
 mongoose.connect(
-	"mongodb://localhost:27017/image-host",
+	process.env.MONGODB_URI,
 	{
 		useNewUrlParser: true,
 		useUnifiedTopology: true,

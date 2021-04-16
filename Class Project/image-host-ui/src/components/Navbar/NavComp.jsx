@@ -18,10 +18,16 @@ export default function NavComp() {
 		}
 	};
 
+	const toUpload = () => {
+		history.push("/create");
+	};
+
 	return (
 		<Navbar bg="dark" variant="dark" expand="lg">
 			<Container>
-				<Navbar.Brand href="/">Image-Hosting</Navbar.Brand>
+				<Link to="/">
+					<Navbar.Brand>Image-Hosting</Navbar.Brand>
+				</Link>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					{!user ? (
@@ -37,7 +43,7 @@ export default function NavComp() {
 						<Nav className="ml-auto">
 							<Navbar.Text>Welcome,</Navbar.Text>
 							<NavDropdown title={user.email} id="basic-nav-dropdown">
-								<NavDropdown.Item>Upload</NavDropdown.Item>
+								<NavDropdown.Item onClick={toUpload}>Upload</NavDropdown.Item>
 								<NavDropdown.Divider />
 								<NavDropdown.Item onClick={handleLogout}>
 									Logout

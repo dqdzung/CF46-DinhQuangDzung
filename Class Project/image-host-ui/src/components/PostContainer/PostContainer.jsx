@@ -1,4 +1,4 @@
-import { Card } from "react-bootstrap";
+import { Card, Container } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
 function PostContainer(props) {
@@ -9,7 +9,7 @@ function PostContainer(props) {
 	};
 
 	return (
-		<div>
+		<Container>
 			<Card
 				style={{ width: "100%" }}
 				onClick={() => {
@@ -23,7 +23,7 @@ function PostContainer(props) {
 					<Card.Text>{props.createdBy}</Card.Text>
 				</Card.Body>
 			</Card>
-		</div>
+		</Container>
 	);
 }
 

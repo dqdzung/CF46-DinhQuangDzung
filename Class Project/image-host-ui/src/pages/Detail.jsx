@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Col, Image } from "react-bootstrap";
 import client from "../api";
+import { useParams } from "react-router-dom";
 
 import CommentContainer from "../components/CommentContainer/CommentContainer";
 
@@ -8,12 +9,12 @@ const Detail = () => {
 	const [detail, setDetail] = useState({});
 	const [comments, setComments] = useState([]);
 
-	const postId = window.location.pathname.split("/").pop();
+	const { id } = useParams();
 
 	const fetchPostDetail = async () => {
 		try {
 			const res = await client({
-				url: `api/post/${postId}`,
+				url: `api/post/${id}`,
 				method: "GET",
 			});
 
@@ -34,10 +35,12 @@ const Detail = () => {
 
 	return (
 		<div className="d-flex mt-3">
-			<Col xs={6} md={5}>
+			<Col xs={12} md={6} className="d-flex flex-column">
 				<Image src={detail.imageUrl} fluid />
+				{detail.createdBy && <div>Uploaded by: {detail.createdBy.email}</div>}
 			</Col>
-			<Col xs={6} md={5}>
+
+			<Col xs={12} md={6}>
 				<CommentContainer comments={comments}></CommentContainer>
 			</Col>
 		</div>

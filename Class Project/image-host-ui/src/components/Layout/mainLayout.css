@@ -4,6 +4,6 @@
 
 .main-layout .content {
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
 	height: calc(100vh - 56px);
 }

@@ -1,7 +1,7 @@
 import { AuthContext } from "../../App";
-import { useEffect, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Container, Form, Button } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 
 import client from "../../api";
 import "./commentContainer.css";
@@ -53,7 +53,7 @@ const CommentContainer = ({ comments }) => {
 	};
 
 	return (
-		<Container>
+		<div className="container">
 			<div className="comment-list">{renderComments()}</div>
 			{user && (
 				<Form onSubmit={handleSubmit}>
@@ -70,7 +70,7 @@ const CommentContainer = ({ comments }) => {
 					</Form.Group>
 				</Form>
 			)}
-		</Container>
+		</div>
 	);
 };
 

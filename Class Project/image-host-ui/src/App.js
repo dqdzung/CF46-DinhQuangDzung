@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Detail from "./pages/Detail";
+import Create from "./pages/Create";
 import MainLayout from "./components/Layout/MainLayout";
 import Loading from "./components/Loading/Loading";
 import PublicRoute from "./components/Route/Public";
@@ -69,7 +70,7 @@ function App() {
 							<SignUp></SignUp>
 						</GuestRoute>
 						<ProtectedRoute path="/create">
-							<div>Create</div>
+							<Create></Create>
 						</ProtectedRoute>
 						<PublicRoute path="/post/:id">
 							<Detail></Detail>

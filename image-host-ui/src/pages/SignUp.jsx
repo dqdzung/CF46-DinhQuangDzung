@@ -39,7 +39,7 @@ const SignUp = () => {
 		if (!message) {
 			try {
 				const res = await axios({
-					url: "http://localhost:8080/api/auth/signup",
+					url: "/api/auth/signup",
 					method: "POST",
 					data: {
 						email,

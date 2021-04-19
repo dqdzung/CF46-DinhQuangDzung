@@ -2,7 +2,7 @@ import AuthLayout from "../components/Layout/AuthLayout";
 import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import client from "../api";
 
 const SignUp = () => {
 	const [email, setEmail] = useState("");
@@ -38,7 +38,7 @@ const SignUp = () => {
 
 		if (!message) {
 			try {
-				const res = await axios({
+				const res = await client({
 					url: "/api/auth/signup",
 					method: "POST",
 					data: {

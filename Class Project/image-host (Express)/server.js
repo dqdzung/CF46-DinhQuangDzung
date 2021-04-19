@@ -35,7 +35,7 @@ app.use("*", (req, res) => {
 	res.send({ success: 0, message: "404 not found" });
 });
 
-app.listen(8080, (err) => {
+app.listen(process.env.PORT || 8080, (err) => {
 	if (err) {
 		return console.log("Server err", err);
 	}
